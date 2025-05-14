@@ -4,7 +4,7 @@
 /*Connection:
    A transport layer virtual circuit established between two programs for the purpose of communication*/
 
-struct message {
+
 //Basic unit of HTTP communication, consisting of octets matching the syntax defined in sect. 4 and transmitted via the connection
 //Consists of a request OR response (not both?)
 
@@ -13,16 +13,28 @@ struct message {
     //Zero or more header fields
     //an empty line
     //possibly a message body
+char* message;
+
+enum Method {
+    OPTIONS,
+    GET,
+    HEAD,
+    POST,
+    PUT,
+    DELETE,
+    TRACE,
+    CONNECT
 };
 
-struct request {
-//An HTTP request message as defined in sect. 5
-//Server should ignore empty lines above request line
-};
+typedef struct {
+    char* requestLine;
+    char* requestHeader;
+    char* messageBody;
+} Request;
 
-struct response {
+typedef struct {
 //An HTTP response message as defined in sect. 6
-};
+} Response;
 
 //Proxy: An intermediary program which acts as both a server and client for the purpose of making requests on behalf of other clients.
 
@@ -46,4 +58,7 @@ struct response {
 //SP: Space (32)
 //HT: Horizontal-tab (9)
 //": double quote mark (34)
+
+Response* sendRequest(Request* r);
+
 #endif
